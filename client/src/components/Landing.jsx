@@ -10,7 +10,7 @@ function Landing() {
   const [toSignin, setToSignin] = useState(false)
   const [toOtpPage, setToOtpPage] = useState(false)
   const [newOtp, setNewOtp] = useState("0")
-  return <div className='w-screen h-screen overflow-x-hidden overflow-y-hidden  bg-[url("./assets/bg1.jpg")]  bg-cover '>
+  return <div className='w-screen h-screen overflow-x-hidden overflow-y-hidden  bg-[url("./assets/bg1.png")] bg-cover'>
     <div className='mt-5'>
         <Navbar clicked={clicked} setClicked={setClicked}></Navbar>
     </div>

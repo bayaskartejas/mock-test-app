@@ -1,5 +1,5 @@
 import React from 'react'
-import brain from "../assets/brain.gif"
+import brain from "../assets/brain.png"
 import dashboard from "../assets/dashboard.png"
 import tests from "../assets/tests.png"
 import home from "../assets/home.png"

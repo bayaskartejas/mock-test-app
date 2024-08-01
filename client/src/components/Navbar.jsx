@@ -1,5 +1,6 @@
 import React from 'react'
-import brain from "../assets/brain.gif"
+import brain from "../assets/brain.png"
+import search from "../assets/search.png"
 function Navbar({clicked, setClicked}) {
   return <div className=' flex justify-between h-max'>
     <div className='flex w-max lg:ml-40 ml-8'>
@@ -8,7 +9,8 @@ function Navbar({clicked, setClicked}) {
     </div>
 
     <div className='md:flex items-center hidden'>
-        <input type="text" className='border-2 h-10 w-96 px-5 rounded-3xl' placeholder='Search'/>
+        <input type="text" className='border-2 border-black h-10 w-96 px-5 rounded-3xl' placeholder='Search'/>
+        <img src={search} alt="" className='h-8 ml-3 cursor-pointer'/>
     </div>
 
     <div className='flex items-center lg:mr-40 mr-8'>

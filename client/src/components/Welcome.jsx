@@ -1,6 +1,5 @@
 import React from 'react'
-import image from "../assets/brain.gif"
-import Login from './Login'
+import image from "../assets/brain.png"
 import next from "../assets/next.png"
 function Welcome({clicked, setClicked, setToSignup}) {
   return <div className='bg-white w-96 h-96 justify-self-center shadow-lg rounded-lg md:px-7 px-4 py-8 transform transition-transform duration-300 scale-95'>
