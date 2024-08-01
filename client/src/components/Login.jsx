@@ -13,7 +13,7 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className=''>
       <GoogleLogin
         onSuccess={handleLoginSuccess}
         onError={handleLoginError}

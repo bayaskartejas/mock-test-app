@@ -7,7 +7,7 @@ import './App.css';
 
 function App() {
   return (
-    <div className='h-screen grid font-poppins bg-[url("./assets/bg1.jpg")]  bg-cover '>
+    <div className='h-screen grid font-poppins'>
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Home />} />

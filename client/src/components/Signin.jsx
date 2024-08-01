@@ -33,8 +33,8 @@ function Signin({setToSignin}) {
     <div>
         <form onSubmit={handleclick}  className='mt-4'>   
             <Login/>
-            <input ref={idRef} type="text" name="" id="" className='w-full h-8 border-2 mt-2 rounded-md text-sm pl-3' placeholder='Email' required/>
-            <input ref={passwordRef} type="password" name="" id="" className='w-full h-8 mt-2 border-2 rounded-md text-sm pl-3' required placeholder='Password'/>
+            <input ref={idRef} type="text" name="" id="" className='w-full h-8 border-2 border-gray-300 placeholder:text-gray-500 mt-2 rounded-md text-sm pl-3' placeholder='Email' required/>
+            <input ref={passwordRef} type="password" name="" id="" className='w-full h-8 mt-2 border-2 border-gray-300 placeholder:text-gray-500 rounded-md text-sm pl-3' required placeholder='Password'/>
             <button type='submit'  className='flex text-white text-lg bg-green-201 w-full py-2 rounded-md hover:bg-green-101 transition delay-100 hover:shadow-md justify-center mt-4'>Sign in</button>
         </form>
 

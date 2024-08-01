@@ -49,14 +49,14 @@
       </div>
       <form onSubmit={handleSubmit} action="">
       <div className='flex mt-3'>
-        <input type="text" name="" id="" className='w-full h-8 mr-2 border-2 pl-3 rounded-md text-sm' ref={firstNameRef} placeholder='First Name' required/>
-        <input type="text" name="" id="" className='w-full h-8 ml-2 border-2 pl-3 rounded-md text-sm'ref={lastNameRef} placeholder='Last Name' required/>
+        <input type="text" name="" id="" className='w-full h-8 mr-2 border-2 border-gray-300 placeholder:text-gray-500 pl-3 rounded-md text-sm' ref={firstNameRef} placeholder='First Name' required/>
+        <input type="text" name="" id="" className='w-full h-8 ml-2 border-2 border-gray-300 placeholder:text-gray-500 pl-3 rounded-md text-sm'ref={lastNameRef} placeholder='Last Name' required/>
       </div>
-      <input type="text" name="" id="" className='w-full h-8 mt-2 border-2 rounded-md text-sm pl-3' ref={emailRef} placeholder='Email' required/>
-      <input type="password" name="" id="" className='w-full h-8 mt-2 border-2 rounded-md text-sm pl-3' ref={passwordRef} placeholder='Password' required/>
+      <input type="text" name="" id="" className='w-full h-8 mt-2 border-2 border-gray-300 placeholder:text-gray-500 rounded-md text-sm pl-3' ref={emailRef} placeholder='Email' required/>
+      <input type="password" name="" id="" className='w-full h-8 mt-2 border-2 border-gray-300 placeholder:text-gray-500 rounded-md text-sm pl-3' ref={passwordRef} placeholder='Password' required/>
       <div className='flex mt-2'>
-        <input type="number" name="" id="" className='w-full h-8 mr-2 border-2 pl-3 rounded-md text-sm' ref={ageRef} placeholder='Age' required/>
-        <select ref={genderRef} name="" id="" className='w-full h-8 ml-2 border-2 pl-3 rounded-md text-sm' aria-label="Gender" required>
+        <input type="number" name="" id="" className='w-full h-8 mr-2 border-2 pl-3  border-gray-300 placeholder:text-gray-500 rounded-md text-sm' ref={ageRef} placeholder='Age' required/>
+        <select ref={genderRef} name="" id="" className='w-full h-8 ml-2 border-2  border-gray-300 pl-3 rounded-md text-sm' aria-label="Gender" required>
           <option value="Select">Select</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
