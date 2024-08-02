@@ -1,10 +1,17 @@
 import React from 'react';
 import { GoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
 
 function Login() {
   const handleLoginSuccess = (response) => {
     console.log('Login Success:', response.credential);
-    // Handle the response here
+    axios.post("http://localhost:3000/verifyUser",{
+      token: response.credential
+    })
+    .then((res)=>{
+      console.log(res);
+    })
+    .catch((e)=>{alert(e.response.data.msg)})
   };
 
   const handleLoginError = (error) => {
