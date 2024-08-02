@@ -1,18 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from './Navbar'
 import Welcome from './Welcome'
 import Signup from './Signup'
 import Signin from './Signin'
 import Otp from './Otp'
+import { useNavigate } from 'react-router-dom'
 function Landing() {
+  const navigate = useNavigate()
   const [clicked, setClicked] = useState(false)
   const [toSignup, setToSignup] = useState(false)
   const [toSignin, setToSignin] = useState(false)
   const [toOtpPage, setToOtpPage] = useState(false)
   const [newOtp, setNewOtp] = useState("0")
+  useEffect(()=>{
+    if(localStorage.getItem("token")){
+      navigate("/home")
+    }
+  })
   return <div className='w-screen h-screen overflow-x-hidden overflow-y-hidden  bg-[url("./assets/bg1.png")] bg-cover'>
     <div className='mt-5'>
-        <Navbar clicked={clicked} setClicked={setClicked}></Navbar>
+        <Navbar clicked={clicked} setClicked={setClicked} setToSignin={setToSignin}></Navbar>
     </div>
     <h1 className='md:flex hidden  w-full px-11 justify-center h-max text-7xl font-bold tracking-wide mt-40 text-center scale-110'>
       One stop solution for aptitude <br /> mock tests!
