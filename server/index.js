@@ -1,7 +1,8 @@
 const express = require('express');
-const { OAuth2Client } = require('google-auth-library');
+const { OAuth2Client, auth } = require('google-auth-library');
+const QB = require("./QB.json")
 require('dotenv').config();
-const { CLIENT_ID, PASSWORD, SECRET_KEY } = process.env;
+const { CLIENT_ID, PASSWORD, SECRET_KEY, ADMIN_ID, ADMIN_PASSWORD } = process.env;
 const cors = require('cors');
 const nodemailer = require("nodemailer")
 const zod = require("zod")
@@ -11,6 +12,7 @@ const jwt = require("jsonwebtoken")
 const client = new OAuth2Client(CLIENT_ID);
 const {User, inputSchema} = require("./db.js")
 const bodyParser = require("body-parser");
+const  {authMiddleware}  = require("./authMiddleware")
 
 app.use(express.json())
 app.use(cors());
@@ -106,11 +108,11 @@ app.post("/signin", async(req,res)=>{
             password: req.body.password
         })
         if(exist != null){
-            let token = jwt.sign({id: req.body.id}, SECRET_KEY)
-            let user = await User.find({email: req.body.id})
-            let email = req.body.id
-            let name = user[0].firstName
-            res.status(200).json({token: token, email: email, name: name})
+                let token = jwt.sign({id: req.body.id}, SECRET_KEY)
+                let user = await User.find({email: req.body.id})
+                let email = req.body.id
+                let name = user[0].firstName
+                res.status(200).json({token: token, email: email, name: name, isAdmin: false})
         }
         else{
             res.status(404).json({
@@ -123,6 +125,45 @@ app.post("/signin", async(req,res)=>{
             msg:"Enter correct email"
         })
     }
+})
+
+app.post("/verifyUser", async (req,res)=>{
+    let token = req.body.token
+    try{
+        jwt.verify(token, SECRET_KEY)
+        let userData = jwt.decode(token)
+        let exist = await User.exists({
+            email: userData.email,
+        })
+        if(exist != null){
+            let token = jwt.sign({id: userData.email}, SECRET_KEY)
+            let user = await User.find({email: userData.email})
+            let email = userData.email
+            let name = user[0].firstName
+            res.status(200).json({token: token, email: email, name: name})
+        }
+        else{
+            res.status(404).json({
+                msg: "user does not exist"
+            })
+        }
+        let user = {
+            firstName: userData.given_name,
+            lastName: userData.family_name,
+            email: userData.email,
+            password: "",
+            age: 0,
+            gender: "",
+        }
+    }
+    catch(e){
+        console.log("jwt not provided");
+
+    }
+})
+
+app.get("/getqb", authMiddleware, async (req, res)=>{
+    res.status(200).json(QB)
 })
 
 app.listen(3000, () => console.log('Server running on port 3000'));

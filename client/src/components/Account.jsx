@@ -1,0 +1,28 @@
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import Logout from './Logout'
+function Account({ showLogout, setShowLogout, children }) {
+    const navigate = useNavigate()
+    let token = localStorage.getItem("token")
+  
+    useEffect(()=>{
+      let token = localStorage.getItem("token")
+        if(!token){
+            navigate("/")
+        }
+    },[token])
+    return (
+        <div className='bg-slate-200 h-full'>
+            {showLogout ? <div id='logout' className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300'><Logout setShowLogout={setShowLogout}/> </div> : <></>}
+            <div className='hidden xl:flex'>
+                {children}
+            </div>
+            <div className='bp:mt-[6rem] sm:mt-[3rem] mt-16 xl:ml-72 flex-grow'>
+                Account
+            </div>
+        </div>
+    )
+}
+
+export default Account

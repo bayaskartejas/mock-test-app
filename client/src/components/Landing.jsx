@@ -17,7 +17,7 @@ function Landing() {
       navigate("/home")
     }
   })
-  return <div className='w-screen h-screen overflow-x-hidden overflow-y-hidden  bg-[url("./assets/bg1.png")] bg-cover'>
+  return <div className='w-screen h-screen overflow-x-hidden   bg-[url("./assets/bg1.png")] bg-cover'>
     <div className='mt-5'>
         <Navbar clicked={clicked} setClicked={setClicked} setToSignin={setToSignin}></Navbar>
     </div>

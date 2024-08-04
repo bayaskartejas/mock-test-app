@@ -17,6 +17,7 @@ useEffect(() => {
         <div className='mt-10 flex justify-center'>
             <button onClick={()=>{
                 localStorage.removeItem("token")
+                localStorage.removeItem("isAdmin")
                 navigate("/")
             }} className='w-28 border-2 border-slate-300 py-2 mx-2 rounded-lg'>Yes</button>
             <button onClick={()=>{setShowLogout(false)}} className='w-28 border py-2 mx-2 bg-green-101 text-white rounded-lg'>No</button>

@@ -1,10 +1,11 @@
-const {secretKey} = require("./db")
+require('dotenv').config();
+const {SECRET_KEY} = process.env;
 const jwt = require("jsonwebtoken")
 
 async function authMiddleware(req, res, next){
     let token = req.headers.authorization
     try{
-        jwt.verify(token, secretKey)
+        jwt.verify(token, SECRET_KEY)
         next()
     }
     catch(e){
