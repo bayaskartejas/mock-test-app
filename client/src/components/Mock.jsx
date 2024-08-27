@@ -5,12 +5,24 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Navbar3 from './Navbar3'
 import tick from "../assets/tick.png"
+import wrong from "../assets/wrong.png"
+import question from "../assets/question.png"
+import res from "../assets/res.png"
+import Warn2 from './Warn2'
 function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
   const navigate = useNavigate()
   const [shuffledQb, setShuffledQb] = useState([{}])
   const [attemptCount, setAttemptCount] = useState({})
   const [showConfirm, setShowConfirm] = useState({})
   const [answerLog, setAnswerLog] = useState({})
+  const [answer, setAnswer] = useState({})
+  const [marksObtained, setMarksObtained] = useState(0)
+  const [incorrect, setIncorrect] = useState(0)
+  const [showAttempted, setShowAttempted] = useState({})
+  const [showInst, setShowInst] = useState(true)
+  const [showPage, setShowPage] = useState(false)
+  const [time, setTime] = useState(1800)
+  const [showResult, setShowResult] = useState(false)
   useEffect(() => {
     const handleBeforeUnload = (event) => {
       event.preventDefault();
@@ -89,37 +101,87 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
   },[answerLog])
   
   useEffect(()=>{
+    if(qbId == 0){
+      setTime(1800)
+    }
+    else if(qbId == 1){
+      setTime(300)
+    }
+    else if(qbId == 2){
+      setTime(10)
+    }
+  },[])
+
+  useEffect(()=>{
     shuffledQb.map((question, index) => {
       if(attemptCount[index]){
         document.getElementById(index+"st").style.backgroundColor = "#00b386"
+        document.getElementById(index+"q").style.backgroundColor = "#00b386"
         document.getElementById(index+"st").style.color = "#fff"
+        document.getElementById(index+"q").style.color = "#fff"
       }
     })
   },[attemptCount])
 
   return (
     <div className='bg-slate-200 h-full'>
-      {showLogout ? <div id='logout' className='z-10 fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300'><Logout setShowLogout={setShowLogout}/> </div> : <></>}
+      {showLogout ? <div id='logout' className='z-10 fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'><Logout setShowLogout={setShowLogout}/> </div> : <></>}
       <div className='hidden xl:flex border'>
           {children}
           <div id='box' className='min-w-10 rounded-md h-[550px] top-20 fixed right-2 px-5 shadow-xl bg-white grid grid-cols-4 py-5 gap-x-1'>
             {shuffledQb ? (
               shuffledQb.map((question, index) => (
-                <a href={"#"+index}><div id={index+"st"} className='h-5 w-5 text-xs border-2 flex items-center justify-center rounded-md p-2'>{index+1}</div></a> 
+                <a href={"#"+(index+1)}><div id={index+"st"} className='h-5 w-5 text-xs border-2 flex items-center justify-center rounded-md p-2'>{index+1}</div></a> 
               ))
             ):<></>}
           </div>
       </div>
-      <div className='bp:mt-[4rem] sm:mt-[2rem] mt-8 xl:ml-72 flex-grow flex justify-center'> 
+      <div id='main' className='bp:mt-[4rem] sm:mt-[2rem] mt-8 xl:ml-72 flex-grow flex justify-center'> 
         <div className='fixed w-[270px] sm:w-[500px] md:w-[800px] lg:w-[1000px] top-0 flex h-max'>
-          <Navbar3 attemptCount={attemptCount}/>
+            <Navbar3 attemptCount={attemptCount} setShowPage={setShowPage} time={time} setTime={setTime} setShowResult={setShowResult}/>
         </div>
+      {showPage ? <></> : <div className='fixed top-16 xl:left-72 inset-0 flex items-center justify-center bg-black bg-opacity-90'>
+        <div className='text-white'>Click the <span className='w-max bg-green-101 px-3 py-1 rounded-md text-white m-1'>Start</span> Button on the Topbar</div>  
+      </div>}
+      {showResult ? <div className='fixed top-0 xl:left-72 inset-0 flex items-center justify-center bg-black bg-opacity-90'>
+          <div className='bg-white w-max h-max p-10 rounded-md'>
+            <h1 className='font-bold text-3xl w-full flex justify-center'>Your Result!</h1>
+            <div className='h-max w-full flex justify-center mt-2'>
+              <ol className=''>
+                <li className='flex my-2'>
+                  <img src={tick} alt="" className='h-6'/>
+                  <div className='ml-3'>Correct: <span>{marksObtained}</span></div>
+                </li>
+                <li className='flex my-2'>
+                  <img src={wrong} alt="" className='h-6'/>
+                  <div className='ml-3'>Incorrect: <span>{incorrect}</span></div>
+                </li>
+                <li className='flex my-2'>
+                  <img src={question} alt="" className='h-5'/>
+                  <div className='ml-4'>Not Attempted: <span>{shuffledQb.length - (marksObtained + incorrect)}</span></div>
+                </li>
+                <div className='border-2 w-full'></div>
+                <li className='flex my-2'>
+                  <img src={res} alt="" className='h-6'/>
+                  <div className='ml-3'><strong>Result :</strong> <span>{marksObtained}</span></div>
+                </li>
+              </ol>
+            </div>
+            <div className='mt-4 flex'>
+              <button className='px-2 py-1 rounded-md bg-green-101 text-white mx-2'>Check Answers</button>
+              <button onClick={()=>{
+                navigate("/home")
+              }} className='px-2 py-1 rounded-md border border-black mx-2'>Homepage</button>
+            </div>
+          </div>  
+      </div> : <></>}
+      {showInst ? <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-90'><Warn2 setShowInst={setShowInst}/></div> : <></>}
         <div className='mt-7 w-full'>
           {shuffledQb ? (
                 shuffledQb.map((question, index) => (
-                  <div id={index+1} className='w-full flex justify-center text-sm sm:text-base border border-black'>
+                  <div id={index+1} className='w-full flex justify-center text-sm sm:text-base border'>
                     <div className='sm:w-1/2 w-full mx-3 min-h-52 max-h-max bg-white shadow-md rounded-lg my-3 sm:px-7 px-5 py-7 flex flex-col items-center'>
-                    <div className='w-full h-max'><strong>Q.{index + 1}.</strong> <span className='ml-2'>{question.q}</span></div>
+                    <div className='w-full h-max'><strong id={index + "q"} className='rounded-md p-1'>Q.{index + 1}.</strong> <span className='ml-2'>{question.q}</span></div>
                     <div className='border w-full mt-3'></div>
                     <div className='w-full mt-3'>
                       <div onClick={()=>{
@@ -151,11 +213,31 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
                     </div>
                     {showConfirm[index] ? <div className='w-full flex justify-end items-center pr-3'>
                       <div onClick={()=>{
-                        setAttemptCount((prevState => ({...prevState, [index]: true})))
                         setShowConfirm({[index]: false})
+                        setAttemptCount((prevState => ({...prevState, [index]: true})))
+                        setAnswer((prevState => ({...prevState, [index]: answerLog[index]})))
+                        let ans;
+                        if(question.a === 1){
+                          ans = "A";
+                        }
+                        else if(question.a === 2){
+                          ans = "B";
+                        }
+                        else if(question.a === 3){
+                          ans = "C";
+                        }
+                        else{
+                          ans = "D";
+                        }
+                        if(answerLog[index] === ans){
+                          setMarksObtained(marksObtained+1)
+                        }
+                        else{
+                          setIncorrect(incorrect+1)
+                        }
                       }} className='flex items-center hover:bg-slate-100 px-2 py-2 rounded-md cursor-pointer border'>
                         <img src={tick} alt="" className='h-7 mr-2'/>
-                        Confirm
+                        {attemptCount[index] ? <div>Attempted</div> : <div>Confirm</div>}
                       </div>
                     </div> : <></>}
                   </div>
