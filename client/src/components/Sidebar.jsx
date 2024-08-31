@@ -50,8 +50,12 @@ function Sidebar({setShowLogout}) {
                         <img src={logout} alt="" className='h-7'/>
                         <h1 className='ml-5'>Log out</h1>
                     </li>
+                    <li onClick={()=>{navigate("/feed")}} className='h-14 w-full rounded-md hover:bg-gray-200 flex items-center pl-6 cursor-pointer'>
+                        <img src={question} alt="" className='h-7'/>
+                        <h1 className='ml-5'>Feed Questions</h1>
+                    </li>
                     <a href="https://portfolio-bayaskartejas-projects.vercel.app/" target='blank'>
-                        <li className='mt-2 h-14 w-full rounded-md hover:bg-gray-200 flex items-center pl-5 cursor-pointer'>
+                        <li className='h-14 w-full rounded-md hover:bg-gray-200 flex items-center pl-6 cursor-pointer'>
                             <img src={developer} alt="" className='h-8'/>
                             <h1 className='ml-5'>About Me</h1>
                         </li>

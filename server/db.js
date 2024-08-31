@@ -21,9 +21,21 @@ const userSchema = mongoose.Schema({
     age: Number,
     gender: String,  
 })
+
+const questionSchema = mongoose.Schema({
+    Q: String,
+    A: String,
+    B: String,
+    C: String,
+    D: String,
+    S: String
+})
+
 const User = mongoose.model("User", userSchema)
+const Question = mongoose.model("Question", questionSchema)
 
 module.exports = {
     User,
     inputSchema,
+    Question
 }

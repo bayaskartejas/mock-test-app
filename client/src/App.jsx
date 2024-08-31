@@ -12,6 +12,7 @@ import Dashboard from './components/Dashboard';
 import Mock from './components/Mock';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Feed from './components/Feed';
 
 function App() {
   const [showLogout, setShowLogout] = useState(false)
@@ -60,6 +61,7 @@ function App() {
         <Route path="/settings" element={<Settings showLogout={showLogout} setShowLogout={setShowLogout}><Sidebar setShowLogout={setShowLogout}/></Settings>} />
         <Route path="/account" element={<Account showLogout={showLogout} setShowLogout={setShowLogout}><Sidebar setShowLogout={setShowLogout}/></Account>} />
         <Route path="/tests/mock" element={<Mock qbanks={qbanks} qbId={qbId} showLogout={showLogout} setShowLogout={setShowLogout} setQbanks={setQbanks}><Sidebar setShowLogout={setShowLogout}/></Mock>} />
+        <Route path="/feed" element={<Feed showLogout={showLogout} setShowLogout={setShowLogout}><Sidebar setShowLogout={setShowLogout}/></Feed>} />
       </Routes>
     </div>
   );

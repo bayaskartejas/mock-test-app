@@ -10,6 +10,7 @@ import question from "../assets/question.png"
 import res from "../assets/res.png"
 import Warn2 from './Warn2'
 function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
+  let shuffledQb1;
   const navigate = useNavigate()
   const [shuffledQb, setShuffledQb] = useState([{}])
   const [attemptCount, setAttemptCount] = useState({})
@@ -23,6 +24,7 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
   const [showPage, setShowPage] = useState(false)
   const [time, setTime] = useState(1800)
   const [showResult, setShowResult] = useState(false)
+  const [checkAns, setCheckAns] = useState(false)
   useEffect(() => {
     const handleBeforeUnload = (event) => {
       event.preventDefault();
@@ -108,7 +110,7 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
       setTime(300)
     }
     else if(qbId == 2){
-      setTime(10)
+      setTime(600)
     }
   },[])
 
@@ -122,6 +124,80 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
       }
     })
   },[attemptCount])
+
+  useEffect(()=>{
+    if(checkAns){
+      document.getElementById("nav").style.display = "none";
+      shuffledQb.map((question, index)=>{
+        let a;
+          if(answer[index] === "A"){
+            a = 1;
+          }
+          else if(answer[index] === "B"){
+            a = 2;
+          }
+          else if(answer[index] === "C"){
+            a = 3;
+          }
+          else if(answer[index] === "D"){
+            a = 4;
+          }
+        if(question.a === 1){
+          console.log(index+answer[index]);
+          
+          document.getElementById(index + "A").backgroundColor = "black"
+          document.getElementById(index+"A").style.color = "#fff"
+          if(question.a != a && answer[index]){
+            document.getElementById(index+answer[index]).style.backgroundColor = "red"
+            document.getElementById(index+answer[index]).style.color = "#fff"
+          }
+          else if(question.a === a){
+            document.getElementById(index + "A").backgroundColor = "#00b386"
+            document.getElementById(index+"A").style.color = "#fff"
+          }
+        }
+        else if(question.a === 2){
+          console.log(index+answer[index]);
+          document.getElementById(index + "B").backgroundColor = "black"
+          document.getElementById(index+"B").style.color = "#fff"
+          if(question.a != a && answer[index]){
+            document.getElementById(index+answer[index]).style.backgroundColor = "red"
+            document.getElementById(index+answer[index]).style.color = "#fff"
+          }
+          else if(question.a === a){
+            document.getElementById(index + "B").backgroundColor = "#00b386"
+            document.getElementById(index+"B").style.color = "#fff"
+          }
+        }
+        else if(question.a === 3){
+          console.log(index+answer[index]);
+          document.getElementById(index + "C").backgroundColor = "black"
+          document.getElementById(index+"C").style.color = "#fff"
+          if(question.a != a && answer[index]){
+            document.getElementById(index+answer[index]).style.backgroundColor = "red"
+            document.getElementById(index+answer[index]).style.color = "#fff"
+          }
+          else if(question.a === a){
+            document.getElementById(index + "C").backgroundColor = "#00b386"
+            document.getElementById(index+"C").style.color = "#fff"
+          }
+        }
+        else if(question.a === 4){
+          console.log(index+answer[index]);
+          document.getElementById(index + "D").backgroundColor = "black"
+          document.getElementById(index+"D").style.color = "#fff"
+          if(question.a != a && answer[index]){
+            document.getElementById(index+answer[index]).style.backgroundColor = "red"
+            document.getElementById(index+answer[index]).style.color = "#fff"
+          }
+          else if(question.a === a){
+            document.getElementById(index + "D").backgroundColor = "#00b386"
+            document.getElementById(index+"D").style.color = "#fff"
+          }
+        }
+      })
+    }
+  },[checkAns])
 
   return (
     <div className='bg-slate-200 h-full'>
@@ -137,8 +213,8 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
           </div>
       </div>
       <div id='main' className='bp:mt-[4rem] sm:mt-[2rem] mt-8 xl:ml-72 flex-grow flex justify-center'> 
-        <div className='fixed w-[270px] sm:w-[500px] md:w-[800px] lg:w-[1000px] top-0 flex h-max'>
-            <Navbar3 attemptCount={attemptCount} setShowPage={setShowPage} time={time} setTime={setTime} setShowResult={setShowResult}/>
+        <div id='nav' className='fixed w-[270px] sm:w-[500px] md:w-[800px] lg:w-[1000px] top-0 flex h-max'>
+            <Navbar3 attemptCount={attemptCount} setShowPage={setShowPage} time={time} setTime={setTime} setShowResult={setShowResult} shuffledQb={shuffledQb} shuffledQb1={shuffledQb1}/>
         </div>
       {showPage ? <></> : <div className='fixed top-16 xl:left-72 inset-0 flex items-center justify-center bg-black bg-opacity-90'>
         <div className='text-white'>Click the <span className='w-max bg-green-101 px-3 py-1 rounded-md text-white m-1'>Start</span> Button on the Topbar</div>  
@@ -168,7 +244,10 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
               </ol>
             </div>
             <div className='mt-4 flex'>
-              <button className='px-2 py-1 rounded-md bg-green-101 text-white mx-2'>Check Answers</button>
+              <button onClick={()=>{
+                setCheckAns(true)
+                setShowResult(false)
+              }} className='px-2 py-1 rounded-md bg-green-101 text-white mx-2'>Check Answers</button>
               <button onClick={()=>{
                 navigate("/home")
               }} className='px-2 py-1 rounded-md border border-black mx-2'>Homepage</button>

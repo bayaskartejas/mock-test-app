@@ -10,7 +10,7 @@ const otpGenerator = require("otp-generator")
 const app = express();
 const jwt = require("jsonwebtoken")
 const client = new OAuth2Client(CLIENT_ID);
-const {User, inputSchema} = require("./db.js")
+const {User, inputSchema, Question} = require("./db.js")
 const bodyParser = require("body-parser");
 const  {authMiddleware}  = require("./authMiddleware")
 
@@ -164,6 +164,12 @@ app.post("/verifyUser", async (req,res)=>{
 
 app.get("/getqb", authMiddleware, async (req, res)=>{
     res.status(200).json(QB)
+})
+
+app.post("/postQuestion", authMiddleware, async (req, res)=>{
+    let data = new Question(req.body)
+    let re = await data.save()
+    res.status(200).json(re)
 })
 
 app.listen(3000, () => console.log('Server running on port 3000'));

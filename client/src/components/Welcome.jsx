@@ -11,7 +11,7 @@ function Welcome({clicked, setClicked, setToSignup}) {
         </svg>
     </div>
     <div className='border mt-2'></div>
-    <h6 className='font-light sm:text-base text-sm break-words text-wrap flex justify-center text-slate-600 mt-5'>The question sets used here are merely for practice purposes, these questions aren't necessarily asked previously in any company's aptitude assessment. The sole purpose of this website is to make student profecient at Aptitude. <br />Good Luck!</h6>
+    <h6 className='font-light sm:text-base text-sm break-words text-wrap flex justify-center text-slate-600 mt-5'>The question sets used here are merely for practice purposes, these questions aren't necessarily asked previously in any company's aptitude assessment. The sole purpose of this website is to make students profecient at Aptitude. <br />Good Luck!</h6>
     <div className='flex justify-center mt-5'>
      <button onClick={()=>{setToSignup(true); setClicked(false)}} className='text-white bg-green-201 px-3 py-2 rounded-md hover:bg-green-101 transition delay-100 flex items-center hover:shadow-md'>Get Started <img className='ml-2' src={next} alt="" /> </button>
     </div>

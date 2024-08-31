@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import timer from "../assets/timer.png"
-function Navbar3({attemptCount, setShowPage, time, setTime, setShowResult}) {
+function Navbar3({attemptCount, setShowPage, time, setTime, setShowResult, shuffledQb, shuffledQb1}) {
     const [startClicked, setStartClicked] = useState(false)
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
@@ -33,7 +33,10 @@ function Navbar3({attemptCount, setShowPage, time, setTime, setShowResult}) {
                 </span>
             </div>
             <div>
-                {startClicked ? <button id='startBtn' className='w-max bg-red-500 px-5 py-2 rounded-md text-white' onClick={()=>{setStartClicked(false); setShowResult(true)}}>Submit</button> :
+                {startClicked ? <button id='startBtn' className='w-max bg-red-500 px-5 py-2 rounded-md text-white' onClick={()=>{setStartClicked(false);
+                setShowResult(true);
+                shuffledQb1 = shuffledQb
+            }}>Submit</button> :
                     <button id='submitBtn' className="w-max bg-green-101 px-5 py-2 rounded-md text-white" onClick={()=>{setStartClicked(!startClicked);
                     setShowPage(true); }}>Start</button>}
             </div>
