@@ -6,17 +6,29 @@ import Signin from './Signin'
 import Otp from './Otp'
 import { useNavigate } from 'react-router-dom'
 function Landing() {
-  const navigate = useNavigate()
   const [clicked, setClicked] = useState(false)
   const [toSignup, setToSignup] = useState(false)
   const [toSignin, setToSignin] = useState(false)
   const [toOtpPage, setToOtpPage] = useState(false)
   const [newOtp, setNewOtp] = useState("0")
+  const navigate = useNavigate()
+  let token;
   useEffect(()=>{
-    if(localStorage.getItem("token")){
+    if(localStorage.getItem("rememberMe") == "true"){
+     token = localStorage.getItem("token")
+     console.log("reached1");
+    }
+    else{
+     token = sessionStorage.getItem("token")
+     console.log(typeof(localStorage.getItem("rememberMe")));
+    }
+    if(!token){
+      navigate("/")
+    }
+    else{
       navigate("/home")
     }
-  })
+  },[])
   return <div className='w-screen h-screen overflow-x-hidden   bg-[url("./assets/bg1.png")] bg-cover'>
     <div className='mt-5'>
         <Navbar clicked={clicked} setClicked={setClicked} setToSignin={setToSignin}></Navbar>
@@ -34,7 +46,7 @@ function Landing() {
     
     {clicked ? <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 '><Welcome clicked={clicked} setClicked={setClicked} setToSignup={setToSignup}/></div>  : <></>}
     {toSignup ? <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 '><Signup setToSignup={setToSignup} setToSignin={setToSignin} setToOtpPage={setToOtpPage} newOtp={newOtp} setNewOtp={setNewOtp}/></div>  : <></> }
-    {toSignin ? <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 '><Signin setToSignin={setToSignin} /></div>  : <></> }
+    {toSignin ? <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 '><Signin setToSignin={setToSignin}/></div>  : <></> }
     {toOtpPage ? <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 '><Otp setToSignin={setToSignin} setToOtpPage={setToOtpPage} newOtp={newOtp}/></div>  : <></> }
   </div>
 }

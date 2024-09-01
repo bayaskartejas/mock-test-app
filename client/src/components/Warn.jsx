@@ -5,7 +5,7 @@ function Warn({setShowWarn, setQbId, index}) {
   return (
     <div className="bg-white sm:w-96 w-72 h-max justify-self-center shadow-lg rounded-lg md:px-7 px-4 py-8 animate-popup">
         <div className='flex justify-center sm:text-xl text-lg'>
-            Do you wish to start the Mock Test of Question Bank {index+1}?
+            Do you wish to start the Mock Test of this Question Bank?
         </div>
         <div className='mt-10 flex justify-center'>
             <button onClick={()=>{

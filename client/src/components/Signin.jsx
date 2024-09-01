@@ -1,7 +1,8 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Login from './Login'
 import{ useNavigate} from "react-router-dom"
 import axios from 'axios'
+import { useState } from 'react'
 function Signin({setToSignin}) {
   const navigate = useNavigate()
   const idRef = useRef()
@@ -12,12 +13,22 @@ function Signin({setToSignin}) {
         id: idRef.current.value,
         password: passwordRef.current.value,
     })
-    .then((res)=>{  
-      localStorage.setItem("token", res.data.token) 
-      localStorage.setItem("email", res.data.email)
-      localStorage.setItem("name", res.data.name)
-      localStorage.setItem("isAdmin", res.data.isAdmin)
-      navigate("/home")
+    .then((res)=>{ 
+      localStorage.setItem("rememberMe", document.getElementById("rememberMe").checked)
+      if(document.getElementById("rememberMe").checked){
+        localStorage.setItem("token", res.data.token) 
+        localStorage.setItem("email", res.data.email)
+        localStorage.setItem("name", res.data.name)
+        localStorage.setItem("isAdmin", res.data.isAdmin)
+        navigate("/home")
+      }
+      else{
+        sessionStorage.setItem("token", res.data.token) 
+        sessionStorage.setItem("email", res.data.email)
+        sessionStorage.setItem("name", res.data.name)
+        sessionStorage.setItem("isAdmin", res.data.isAdmin)
+        navigate("/home")
+      }
     })
     .catch((e)=>{
       alert(e.response.data.msg)
@@ -36,6 +47,8 @@ function Signin({setToSignin}) {
             <Login/>
             <input ref={idRef} type="text" name="" id="" className='w-full h-8 border-2 border-gray-300 placeholder:text-gray-500 mt-2 rounded-md text-sm pl-3' placeholder='Email' required/>
             <input ref={passwordRef} type="password" name="" id="" className='w-full h-8 mt-2 border-2 border-gray-300 placeholder:text-gray-500 rounded-md text-sm pl-3' required placeholder='Password'/>
+            <input className='mt-5' type="checkbox" id="rememberMe" name="rememberMe" />
+            <label htmlFor="rememberMe"> Remember me</label>
             <button type='submit'  className='flex text-white text-lg bg-green-201 w-full py-2 rounded-md hover:bg-green-101 transition delay-100 hover:shadow-md justify-center mt-4'>Sign in</button>
         </form>
 

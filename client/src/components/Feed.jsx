@@ -4,14 +4,18 @@ import { useEffect } from 'react'
 import axios from 'axios'
 function Feed({ showLogout, setShowLogout, children }) {
     const navigate = useNavigate()
-    let token = localStorage.getItem("token")
-  
+    let token;
     useEffect(()=>{
-      let token = localStorage.getItem("token")
-        if(!token){
-            navigate("/")
+    if(localStorage.getItem("rememberMe")=="true"){
+        token = localStorage.getItem("token")
         }
-    },[token])
+        else{
+        token = sessionStorage.getItem("token")
+        }
+      if(!token){
+        navigate("/")
+      }
+    },[localStorage.getItem("rememberMe")])
 
 
     const sendQuestion = (e) => {

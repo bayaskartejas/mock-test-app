@@ -9,7 +9,7 @@ import wrong from "../assets/wrong.png"
 import question from "../assets/question.png"
 import res from "../assets/res.png"
 import Warn2 from './Warn2'
-function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
+function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, infinity, children}) {
   let shuffledQb1;
   const navigate = useNavigate()
   const [shuffledQb, setShuffledQb] = useState([{}])
@@ -35,7 +35,13 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
     };
   }, []);
   useEffect(()=>{
-    const token = localStorage.getItem("token")
+    let token;
+    if(localStorage.getItem("rememberMe")=="true"){
+      token = localStorage.getItem("token")
+    }
+    else{
+      token = sessionStorage.getItem("token")
+    }
     if(token){
       axios.get("http://localhost:3000/getqb",{
         headers:{
@@ -44,26 +50,27 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
       })
       .then((response)=>{
           const res = response.data;
-          setQbanks(res[0])
+          setQbanks(res.data)
+          console.log(qbId);
       })
       .catch((e)=>{alert(e)})
     }else{
       navigate("/")
     }
-  },[])
+  },[localStorage.getItem("rememberMe")])
   useEffect(() => {
-    if (qbanks && qbanks[qbId]) {
-      const shuffleArray = (array) => {
+    if (qbanks && qbId) {
+      const shuffleArray = (array, limit) => {
         let shuffledArray = array.slice();
-        for (let i = shuffledArray.length - 1; i > 0; i--) {
+        for (let i = limit - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
         }
-        return shuffledArray;
+        return shuffledArray.slice(0, limit);
       };
-      setShuffledQb(shuffleArray(qbanks[qbId]));
+      setShuffledQb(shuffleArray(qbanks, qbId));
     }
-    if(shuffledQb.length <= 10){
+    if(shuffledQb.length == 5 || shuffledQb.length == 10){
       document.getElementById("box").style.gridTemplateColumns = "repeat(1, minmax(0, 1fr))"
     }
     else if(shuffledQb.length == 30){
@@ -71,6 +78,9 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
     }
     else if(shuffledQb.length == 60){
       document.getElementById("box").style.gridTemplateColumns = "repeat(4, minmax(0, 1fr))"
+    }
+    else if(shuffledQb.length == 120){
+      document.getElementById("box").style.gridTemplateColumns = "repeat(8, minmax(0, 1fr))"
     }
   }, [qbanks, qbId]);
   useEffect(()=>{    
@@ -103,14 +113,20 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
   },[answerLog])
   
   useEffect(()=>{
-    if(qbId == 0){
-      setTime(1800)
-    }
-    else if(qbId == 1){
+    if(qbId == 5){
       setTime(300)
     }
-    else if(qbId == 2){
+    else if(qbId == 10){
       setTime(600)
+    }
+    else if(qbId == 30){
+      setTime(1800)
+    }
+    else if(qbId == 60){
+      setTime(3600)
+    }
+    else if(qbId == 120){
+      setTime(7200)
     }
   },[])
 
@@ -125,79 +141,6 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
     })
   },[attemptCount])
 
-  useEffect(()=>{
-    if(checkAns){
-      document.getElementById("nav").style.display = "none";
-      shuffledQb.map((question, index)=>{
-        let a;
-          if(answer[index] === "A"){
-            a = 1;
-          }
-          else if(answer[index] === "B"){
-            a = 2;
-          }
-          else if(answer[index] === "C"){
-            a = 3;
-          }
-          else if(answer[index] === "D"){
-            a = 4;
-          }
-        if(question.a === 1){
-          console.log(index+answer[index]);
-          
-          document.getElementById(index + "A").backgroundColor = "black"
-          document.getElementById(index+"A").style.color = "#fff"
-          if(question.a != a && answer[index]){
-            document.getElementById(index+answer[index]).style.backgroundColor = "red"
-            document.getElementById(index+answer[index]).style.color = "#fff"
-          }
-          else if(question.a === a){
-            document.getElementById(index + "A").backgroundColor = "#00b386"
-            document.getElementById(index+"A").style.color = "#fff"
-          }
-        }
-        else if(question.a === 2){
-          console.log(index+answer[index]);
-          document.getElementById(index + "B").backgroundColor = "black"
-          document.getElementById(index+"B").style.color = "#fff"
-          if(question.a != a && answer[index]){
-            document.getElementById(index+answer[index]).style.backgroundColor = "red"
-            document.getElementById(index+answer[index]).style.color = "#fff"
-          }
-          else if(question.a === a){
-            document.getElementById(index + "B").backgroundColor = "#00b386"
-            document.getElementById(index+"B").style.color = "#fff"
-          }
-        }
-        else if(question.a === 3){
-          console.log(index+answer[index]);
-          document.getElementById(index + "C").backgroundColor = "black"
-          document.getElementById(index+"C").style.color = "#fff"
-          if(question.a != a && answer[index]){
-            document.getElementById(index+answer[index]).style.backgroundColor = "red"
-            document.getElementById(index+answer[index]).style.color = "#fff"
-          }
-          else if(question.a === a){
-            document.getElementById(index + "C").backgroundColor = "#00b386"
-            document.getElementById(index+"C").style.color = "#fff"
-          }
-        }
-        else if(question.a === 4){
-          console.log(index+answer[index]);
-          document.getElementById(index + "D").backgroundColor = "black"
-          document.getElementById(index+"D").style.color = "#fff"
-          if(question.a != a && answer[index]){
-            document.getElementById(index+answer[index]).style.backgroundColor = "red"
-            document.getElementById(index+answer[index]).style.color = "#fff"
-          }
-          else if(question.a === a){
-            document.getElementById(index + "D").backgroundColor = "#00b386"
-            document.getElementById(index+"D").style.color = "#fff"
-          }
-        }
-      })
-    }
-  },[checkAns])
 
   return (
     <div className='bg-slate-200 h-full'>
@@ -214,7 +157,7 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
       </div>
       <div id='main' className='bp:mt-[4rem] sm:mt-[2rem] mt-8 xl:ml-72 flex-grow flex justify-center'> 
         <div id='nav' className='fixed w-[270px] sm:w-[500px] md:w-[800px] lg:w-[1000px] top-0 flex h-max'>
-            <Navbar3 attemptCount={attemptCount} setShowPage={setShowPage} time={time} setTime={setTime} setShowResult={setShowResult} shuffledQb={shuffledQb} shuffledQb1={shuffledQb1}/>
+            <Navbar3 attemptCount={attemptCount} setShowPage={setShowPage} time={time} setTime={setTime} setShowResult={setShowResult} shuffledQb={shuffledQb} shuffledQb1={shuffledQb1} infinity={infinity}/>
         </div>
       {showPage ? <></> : <div className='fixed top-16 xl:left-72 inset-0 flex items-center justify-center bg-black bg-opacity-90'>
         <div className='text-white'>Click the <span className='w-max bg-green-101 px-3 py-1 rounded-md text-white m-1'>Start</span> Button on the Topbar</div>  
@@ -239,7 +182,7 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
                 <div className='border-2 w-full'></div>
                 <li className='flex my-2'>
                   <img src={res} alt="" className='h-6'/>
-                  <div className='ml-3'><strong>Result :</strong> <span>{marksObtained}</span></div>
+                  <div className='ml-3'><strong>Result :</strong> <span>{marksObtained}/{qbId}</span></div>
                 </li>
               </ol>
             </div>
@@ -260,7 +203,10 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
                 shuffledQb.map((question, index) => (
                   <div id={index+1} className='w-full flex justify-center text-sm sm:text-base border'>
                     <div className='sm:w-1/2 w-full mx-3 min-h-52 max-h-max bg-white shadow-md rounded-lg my-3 sm:px-7 px-5 py-7 flex flex-col items-center'>
-                    <div className='w-full h-max'><strong id={index + "q"} className='rounded-md p-1'>Q.{index + 1}.</strong> <span className='ml-2'>{question.q}</span></div>
+                    <div className='w-full h-max'><strong id={index + "q"} className='rounded-md p-1'>Q.{index + 1}.</strong> <span className='ml-2 whitespace-pre-line'>{question.Q}</span></div>
+                    
+                    <div>{question.S}</div>
+                    
                     <div className='border w-full mt-3'></div>
                     <div className='w-full mt-3'>
                       <div onClick={()=>{
@@ -268,46 +214,34 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, children}) {
                           setShowConfirm({[index]: true})
                           setAnswerLog({[index]: "A"})
                         }
-                      }} id={index + "A"} className='w-full hover:bg-slate-100 cursor-pointer my-1 py-1 pl-3 rounded-md'>{"A. " + question[1]}</div>
+                      }} id={index + "A"} className='w-full hover:bg-slate-100 cursor-pointer my-1 py-1 pl-3 rounded-md'>{"A. " + question.A}</div>
                       <div onClick={()=>{
                         if(!attemptCount[index]){
                           setShowConfirm({[index]: true})     
                           setAnswerLog({[index]: "B"})
                         }
                                  
-                      }} id={index + "B"} className='w-full hover:bg-slate-100 cursor-pointer my-1 py-1 pl-3 rounded-md'>{"B. " + question[2]}</div>
+                      }} id={index + "B"} className='w-full hover:bg-slate-100 cursor-pointer my-1 py-1 pl-3 rounded-md'>{"B. " + question.B}</div>
                       <div onClick={()=>{
                         if(!attemptCount[index]){
                           setShowConfirm({[index]: true})   
                           setAnswerLog({[index]: "C"})    
                         }
           
-                      }} id={index + "C"} className='w-full hover:bg-slate-100 cursor-pointer my-1 py-1 pl-3 rounded-md'>{"C. " + question[3]}</div>
+                      }} id={index + "C"} className='w-full hover:bg-slate-100 cursor-pointer my-1 py-1 pl-3 rounded-md'>{"C. " + question.C}</div>
                       <div onClick={()=>{
                         if(!attemptCount[index]){
                           setShowConfirm({[index]: true})  
                           setAnswerLog({[index]: "D"})  
                         }
-                      }} id={index + "D"} className='w-full hover:bg-slate-100 cursor-pointer my-1 py-1 pl-3 rounded-md'>{"D. " + question[4]}</div>
+                      }} id={index + "D"} className='w-full hover:bg-slate-100 cursor-pointer my-1 py-1 pl-3 rounded-md'>{"D. " + question.D}</div>
                     </div>
                     {showConfirm[index] ? <div className='w-full flex justify-end items-center pr-3'>
                       <div onClick={()=>{
                         setShowConfirm({[index]: false})
                         setAttemptCount((prevState => ({...prevState, [index]: true})))
                         setAnswer((prevState => ({...prevState, [index]: answerLog[index]})))
-                        let ans;
-                        if(question.a === 1){
-                          ans = "A";
-                        }
-                        else if(question.a === 2){
-                          ans = "B";
-                        }
-                        else if(question.a === 3){
-                          ans = "C";
-                        }
-                        else{
-                          ans = "D";
-                        }
+                        let ans = question.S
                         if(answerLog[index] === ans){
                           setMarksObtained(marksObtained+1)
                         }

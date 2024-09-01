@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import timer from "../assets/timer.png"
-function Navbar3({attemptCount, setShowPage, time, setTime, setShowResult, shuffledQb, shuffledQb1}) {
+import infinityimg from "../assets/infinity.png"
+function Navbar3({attemptCount, setShowPage, time, setTime, setShowResult, shuffledQb, shuffledQb1, infinity}) {
     const [startClicked, setStartClicked] = useState(false)
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
@@ -8,7 +9,7 @@ function Navbar3({attemptCount, setShowPage, time, setTime, setShowResult, shuff
         return `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
     };
     useEffect(() => {
-        if (time > 0 && startClicked) {
+        if (time > 0 && startClicked && !infinity) {
           const timerId = setInterval(() => {
             setTime((prevTime) => prevTime - 1);
           }, 1000);
@@ -43,7 +44,7 @@ function Navbar3({attemptCount, setShowPage, time, setTime, setShowResult, shuff
             <div className='grid'>
                 <div className='flex justify-center items-center justify-self-center'><img src={timer} alt="" className='h-4 sm:h-5 mr-1'/> <span className='ml-1'>Time</span></div>
                 <span className='justify-self-center'>
-                    <strong id='time' className='tracking-wide'>{formatTime(time)}</strong>
+                    <strong id='time' className='tracking-wide'>{infinity ? <img src={infinityimg}></img>:formatTime(time)}</strong>
                 </span>
             </div>
         </div>

@@ -19,6 +19,7 @@ function App() {
   const [qbanks, setQbanks] = useState([])
   const location = useLocation()
   const [qbId, setQbId] = useState(0)
+  const [infinity, setInfinity] = useState(false)
   useEffect(()=>{
     if(location.pathname === "/home"){
       document.getElementById("hometab").style.backgroundColor = "#E5E7Eb"
@@ -37,7 +38,13 @@ function App() {
     }  
   },[location.pathname])
   useEffect(()=>{
-    const token = localStorage.getItem("token")
+    let token;
+    if(localStorage.getItem("rememberMe")=="true"){
+      token = localStorage.getItem("token")
+    }
+    else{
+      token = sessionStorage.getItem("token")
+    }
     if(token){
       axios.get("http://localhost:3000/getqb",{
         headers:{
@@ -46,21 +53,23 @@ function App() {
       })
       .then((response)=>{
           const res = response.data;
-          setQbanks(res[0])
+          setQbanks(res.data)
       })
     }
   },[])
+  useEffect(()=>{console.log(qbanks);
+  },[qbanks])
 
   return (
     <div className='h-screen grid font-poppins'>
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<Landing/>} />
         <Route path="/home" element={<Home showLogout={showLogout} setShowLogout={setShowLogout}><Sidebar setShowLogout={setShowLogout}/></Home>}/>
         <Route path="/dashboard" element={<Dashboard showLogout={showLogout} setShowLogout={setShowLogout}><Sidebar setShowLogout={setShowLogout}/></Dashboard>} />
-        <Route path="/tests" element={<Tests showLogout={showLogout} setShowLogout={setShowLogout} qbanks={qbanks} setQbId={setQbId}><Sidebar setShowLogout={setShowLogout}/></Tests>} />
+        <Route path="/tests" element={<Tests showLogout={showLogout} setShowLogout={setShowLogout} qbanks={qbanks} setQbId={setQbId} setInfinity={setInfinity}><Sidebar setShowLogout={setShowLogout}/></Tests>} />
         <Route path="/settings" element={<Settings showLogout={showLogout} setShowLogout={setShowLogout}><Sidebar setShowLogout={setShowLogout}/></Settings>} />
         <Route path="/account" element={<Account showLogout={showLogout} setShowLogout={setShowLogout}><Sidebar setShowLogout={setShowLogout}/></Account>} />
-        <Route path="/tests/mock" element={<Mock qbanks={qbanks} qbId={qbId} showLogout={showLogout} setShowLogout={setShowLogout} setQbanks={setQbanks}><Sidebar setShowLogout={setShowLogout}/></Mock>} />
+        <Route path="/tests/mock" element={<Mock qbanks={qbanks} qbId={qbId} showLogout={showLogout} setShowLogout={setShowLogout} setQbanks={setQbanks} infinity={infinity}><Sidebar setShowLogout={setShowLogout}/></Mock>} />
         <Route path="/feed" element={<Feed showLogout={showLogout} setShowLogout={setShowLogout}><Sidebar setShowLogout={setShowLogout}/></Feed>} />
       </Routes>
     </div>

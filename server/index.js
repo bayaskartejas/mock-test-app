@@ -112,7 +112,11 @@ app.post("/signin", async(req,res)=>{
                 let user = await User.find({email: req.body.id})
                 let email = req.body.id
                 let name = user[0].firstName
-                res.status(200).json({token: token, email: email, name: name, isAdmin: false})
+                let isAdmin = false;
+                if(req.body.id == ADMIN_ID && req.body.password == ADMIN_PASSWORD){
+                    isAdmin = true
+                }
+                res.status(200).json({token: token, email: email, name: name, isAdmin: isAdmin})
         }
         else{
             res.status(404).json({
@@ -163,7 +167,8 @@ app.post("/verifyUser", async (req,res)=>{
 })
 
 app.get("/getqb", authMiddleware, async (req, res)=>{
-    res.status(200).json(QB)
+    let data = await Question.find({})
+    res.status(200).json({data})
 })
 
 app.post("/postQuestion", authMiddleware, async (req, res)=>{

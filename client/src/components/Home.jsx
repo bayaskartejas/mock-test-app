@@ -8,14 +8,18 @@ import Logout from './Logout'
 
 function Home({showLogout, setShowLogout, children}) {
   const navigate = useNavigate()
-  let token = localStorage.getItem("token")
-
+  let token;
   useEffect(()=>{
-    let token = localStorage.getItem("token")
-      if(!token){
-          navigate("/")
-      }
-  },[token])
+  if(localStorage.getItem("rememberMe")=="true"){
+    token = localStorage.getItem("token")
+  }
+  else{
+    token = sessionStorage.getItem("token")
+  }
+  if(!token){
+    navigate("/")
+  }
+  },[])
 
 
   return <div className=' bg-slate-200 h-full'>

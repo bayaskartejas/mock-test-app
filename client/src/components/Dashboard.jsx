@@ -4,14 +4,18 @@ import { useEffect } from 'react'
 import Logout from './Logout'
 function Dashboard({ showLogout, setShowLogout, children }) {
     const navigate = useNavigate()
-    let token = localStorage.getItem("token")
-  
+    let token;
     useEffect(()=>{
-      let token = localStorage.getItem("token")
-        if(!token){
-            navigate("/")
+    if(localStorage.getItem("rememberMe")=="true"){
+        token = localStorage.getItem("token")
         }
-    },[token])
+        else{
+        token = sessionStorage.getItem("token")
+        }
+      if(!token){
+        navigate("/")
+      }
+    },[localStorage.getItem("rememberMe")])
     return (
         <div className='bg-slate-200 h-full'>
             {showLogout ? <div id='logout' className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300'><Logout setShowLogout={setShowLogout}/> </div> : <></>}
