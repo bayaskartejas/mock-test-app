@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Logout from './Logout'
 import target from "../assets/target.png"
+import menuopen from "../assets/menuopen.png"
 import Warn from './Warn'
 import Tile2 from './Tile2'
 
-function Tests({ showLogout, setShowLogout, qbanks, setQbId, setInfinity, children }) {
+function Tests({ showLogout, setShowLogout, qbanks, setQbId, setInfinity, showWarn, setShowWarn, showMenu, setShowMenu, children }) {
     let x;
-    const [showWarn, setShowWarn] = useState({})
     const navigate = useNavigate()
     let token;
     useEffect(()=>{
@@ -22,14 +22,31 @@ function Tests({ showLogout, setShowLogout, qbanks, setQbId, setInfinity, childr
         navigate("/")
       }
     },[localStorage.getItem("rememberMe")])
+    useEffect(()=>{
+        if(showMenu){
+          document.getElementById("sideTests").style.display = "flex"
+        }
+        else{
+          document.getElementById("sideTests").style.display = "none"
+        }
+      },[showMenu])
 
     return (
         <div className='bg-slate-200 h-full'>
             {showLogout ? <div id='logout' className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300'><Logout setShowLogout={setShowLogout}/> </div> : <></>}
+            <div id='sideTests' className='hidden xl:flex'>
+                {children}
+            </div>
             <div className='hidden xl:flex'>
                 {children}
             </div>
-            <div className='bp:mt-[6rem] sm:mt-[3rem] mt-16 xl:ml-72 flex-grow'>
+            {showMenu ? <></> :     
+            <div className='flex xl:hidden ml-5 mt-5'>
+            <img onClick={()=>{
+                setShowMenu(true)
+            }} src={menuopen} alt="" className='h-7'/>
+            </div>}
+            <div className='bp:mt-[6rem] sm:mt-[3rem] mt-10 xl:ml-72 flex-grow'>
                 <div className='w-full flex justify-center text-3xl sm:4xl font-semibold text-green-101 tracking-wide'>Tests</div>
                 <div>
                     <div className='h-full sm:mt-10 mt-7'>

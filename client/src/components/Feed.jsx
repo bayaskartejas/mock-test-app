@@ -15,6 +15,9 @@ function Feed({ showLogout, setShowLogout, children }) {
       if(!token){
         navigate("/")
       }
+      if(localStorage.getItem("isAdmin") != "true"){
+        navigate("/")
+      }
     },[localStorage.getItem("rememberMe")])
 
 

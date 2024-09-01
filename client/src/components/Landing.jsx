@@ -42,12 +42,11 @@ function Landing() {
     <div className='flex justify-center md:mt-10 mt-5'>
       <button onClick={()=>{setClicked(!clicked)}} className='flex text-white text-lg bg-green-201 md:px-4 md:py-3 px-3 py-2 rounded-md hover:bg-green-101 transition delay-100 hover:shadow-md '>Get Started</button>
     </div>
-    
-    
     {clicked ? <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 '><Welcome clicked={clicked} setClicked={setClicked} setToSignup={setToSignup}/></div>  : <></>}
     {toSignup ? <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 '><Signup setToSignup={setToSignup} setToSignin={setToSignin} setToOtpPage={setToOtpPage} newOtp={newOtp} setNewOtp={setNewOtp}/></div>  : <></> }
     {toSignin ? <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 '><Signin setToSignin={setToSignin}/></div>  : <></> }
     {toOtpPage ? <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 '><Otp setToSignin={setToSignin} setToOtpPage={setToOtpPage} newOtp={newOtp}/></div>  : <></> }
+    <div className='fixed bottom-5 w-full flex justify-center'>Made with ❤️ by Tejas Bayaskar</div>
   </div>
 }
 

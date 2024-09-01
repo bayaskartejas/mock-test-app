@@ -20,6 +20,8 @@ function App() {
   const location = useLocation()
   const [qbId, setQbId] = useState(0)
   const [infinity, setInfinity] = useState(false)
+  const [showWarn, setShowWarn] = useState({})
+  const [showMenu, setShowMenu] = useState(false)
   useEffect(()=>{
     if(location.pathname === "/home"){
       document.getElementById("hometab").style.backgroundColor = "#E5E7Eb"
@@ -57,20 +59,18 @@ function App() {
       })
     }
   },[])
-  useEffect(()=>{console.log(qbanks);
-  },[qbanks])
 
   return (
     <div className='h-screen grid font-poppins'>
       <Routes>
         <Route path="/" element={<Landing/>} />
-        <Route path="/home" element={<Home showLogout={showLogout} setShowLogout={setShowLogout}><Sidebar setShowLogout={setShowLogout}/></Home>}/>
-        <Route path="/dashboard" element={<Dashboard showLogout={showLogout} setShowLogout={setShowLogout}><Sidebar setShowLogout={setShowLogout}/></Dashboard>} />
-        <Route path="/tests" element={<Tests showLogout={showLogout} setShowLogout={setShowLogout} qbanks={qbanks} setQbId={setQbId} setInfinity={setInfinity}><Sidebar setShowLogout={setShowLogout}/></Tests>} />
-        <Route path="/settings" element={<Settings showLogout={showLogout} setShowLogout={setShowLogout}><Sidebar setShowLogout={setShowLogout}/></Settings>} />
-        <Route path="/account" element={<Account showLogout={showLogout} setShowLogout={setShowLogout}><Sidebar setShowLogout={setShowLogout}/></Account>} />
-        <Route path="/tests/mock" element={<Mock qbanks={qbanks} qbId={qbId} showLogout={showLogout} setShowLogout={setShowLogout} setQbanks={setQbanks} infinity={infinity}><Sidebar setShowLogout={setShowLogout}/></Mock>} />
-        <Route path="/feed" element={<Feed showLogout={showLogout} setShowLogout={setShowLogout}><Sidebar setShowLogout={setShowLogout}/></Feed>} />
+        <Route path="/home" element={<Home showLogout={showLogout} setShowLogout={setShowLogout} showWarn={showWarn} setShowWarn={setShowWarn} showMenu={showMenu} setShowMenu={setShowMenu}><Sidebar setShowLogout={setShowLogout} showMenu={showMenu} setShowMenu={setShowMenu}/></Home>}/>
+        <Route path="/dashboard" element={<Dashboard showLogout={showLogout} setShowLogout={setShowLogout} showMenu={showMenu} setShowMenu={setShowMenu}><Sidebar setShowLogout={setShowLogout} showMenu={showMenu} setShowMenu={setShowMenu}/></Dashboard>} />
+        <Route path="/tests" element={<Tests showLogout={showLogout} setShowLogout={setShowLogout} qbanks={qbanks} setQbId={setQbId} setInfinity={setInfinity} showWarn={showWarn} setShowWarn={setShowWarn} showMenu={showMenu} setShowMenu={setShowMenu}><Sidebar setShowLogout={setShowLogout} showMenu={showMenu} setShowMenu={setShowMenu}/></Tests>} />
+        <Route path="/settings" element={<Settings showLogout={showLogout} setShowLogout={setShowLogout} showMenu={showMenu} setShowMenu={setShowMenu}><Sidebar setShowLogout={setShowLogout} showMenu={showMenu} setShowMenu={setShowMenu}/></Settings>} />
+        <Route path="/account" element={<Account showLogout={showLogout} setShowLogout={setShowLogout} showMenu={showMenu} setShowMenu={setShowMenu}><Sidebar setShowLogout={setShowLogout} showMenu={showMenu} setShowMenu={setShowMenu}/></Account>} />
+        <Route path="/tests/mock" element={<Mock qbanks={qbanks} qbId={qbId} showLogout={showLogout} setShowLogout={setShowLogout} setQbanks={setQbanks} infinity={infinity} showMenu={showMenu} setShowMenu={setShowMenu}><Sidebar setShowLogout={setShowLogout} showMenu={showMenu} setShowMenu={setShowMenu}/></Mock>} />
+        <Route path="/feed" element={<Feed showLogout={showLogout} setShowLogout={setShowLogout} showMenu={showMenu} setShowMenu={setShowMenu}><Sidebar setShowLogout={setShowLogout} showMenu={showMenu} setShowMenu={setShowMenu}/></Feed>} />
       </Routes>
     </div>
   );

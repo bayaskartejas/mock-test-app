@@ -51,7 +51,6 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, infinity, chi
       .then((response)=>{
           const res = response.data;
           setQbanks(res.data)
-          console.log(qbId);
       })
       .catch((e)=>{alert(e)})
     }else{
@@ -203,10 +202,7 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, infinity, chi
                 shuffledQb.map((question, index) => (
                   <div id={index+1} className='w-full flex justify-center text-sm sm:text-base border'>
                     <div className='sm:w-1/2 w-full mx-3 min-h-52 max-h-max bg-white shadow-md rounded-lg my-3 sm:px-7 px-5 py-7 flex flex-col items-center'>
-                    <div className='w-full h-max'><strong id={index + "q"} className='rounded-md p-1'>Q.{index + 1}.</strong> <span className='ml-2 whitespace-pre-line'>{question.Q}</span></div>
-                    
-                    <div>{question.S}</div>
-                    
+                    <div className='w-full h-max'><strong id={index + "q"} className='rounded-md p-1'>Q.{index + 1}.</strong> <span className='ml-2 whitespace-pre-line'>{question.Q}</span></div>                    
                     <div className='border w-full mt-3'></div>
                     <div className='w-full mt-3'>
                       <div onClick={()=>{

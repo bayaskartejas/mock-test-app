@@ -5,8 +5,10 @@ import infinity from "../assets/infinity.png"
 import timer from "../assets/timer.png"
 import progress from "../assets/progress.png"
 import Tile from './Tile'
+import { useNavigate } from 'react-router-dom'
 
-function Options() {
+function Options({showWarn, setShowWarn}) {
+    const navigate = useNavigate()
     const [moreClicked, setMoreClicked] = useState(false)
     useEffect(()=>{
         if(moreClicked){
@@ -24,27 +26,27 @@ function Options() {
         <div id=''>
         <div id='parent' className=''>
                 <div className='grid sm:grid sm:grid-cols-1 jusify-self-center h-max bp:flex justify-around pl-2 w-max xl:w-[calc(100%-18rem)] justify-self-center'>
-                <div className='mx-3 bp:my-0 sm:my-3 my-1'>
+                <div onClick={()=>{navigate("/tests")}} className='mx-3 bp:my-0 sm:my-3 my-1'>
                     <Tile img={thunder} name={"5 min Challenge"}/>
                 </div>
-                <div className='mx-3 bp:my-0 sm:my-3 my-1'>
+                <div onClick={()=>{navigate("/tests")}} className='mx-3 bp:my-0 sm:my-3 my-1'>
                     <Tile img={thunder} name={"10 min Challenge"}/>
                 </div>
-                <div className='mx-3 bp:my-0 sm:my-3 my-1'>
+                <div onClick={()=>{navigate("/tests")}} className='mx-3 bp:my-0 sm:my-3 my-1'>
                     <Tile img={timer} name={"30 min Challenge"}/>
                 </div>
-                <div className='mx-3 bp:my-0 sm:my-3 mt-1'>
+                <div onClick={()=>{navigate("/tests")}} className='mx-3 bp:my-0 sm:my-3 mt-1'>
                     <Tile img={timer} name={"60 min Challenge"}/>
                 </div>
                 </div>
                 <div id='moreRef' className= ''>
-                <div className='mx-3 bp:my-0 sm:my-3  my-2'>
+                <div onClick={()=>{navigate("/tests")}} className='mx-3 bp:my-0 sm:my-3  my-2'>
                     <Tile img={timer} name={"2 hrs Challenge"}/>
                 </div>
-                <div className='mx-3 bp:my-0 sm:my-3  my-2'>
+                <div onClick={()=>{navigate("/tests")}} className='mx-3 bp:my-0 sm:my-3  my-2'>
                     <Tile img={infinity} name={"No Time Limit"}/>
                 </div>
-                <div className='mx-3 bp:my-0 sm:my-3 my-2'>
+                <div onClick={()=>{navigate("/dashboard")}} className='mx-3 bp:my-0 sm:my-3 my-2'>
                     <Tile img={progress} name={"Progress"}/>
                 </div>
                 </div>
