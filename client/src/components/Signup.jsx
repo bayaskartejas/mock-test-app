@@ -18,7 +18,7 @@
       else{
         alert("Select gender properly");
       }
-      axios.post("http://localhost:3000/otp", {
+      axios.post("http://13.202.188.107/otp", {
         firstName: firstNameRef.current.value,
         lastName: lastNameRef.current.value,
         email: emailRef.current.value,

@@ -43,7 +43,7 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, infinity, chi
       token = sessionStorage.getItem("token")
     }
     if(token){
-      axios.get("http://localhost:3000/getqb",{
+      axios.get("http://13.202.188.107/getqb",{
         headers:{
           "Authorization": token
         }
