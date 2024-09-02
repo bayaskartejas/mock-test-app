@@ -162,7 +162,7 @@ app.post("/verifyUser", async (req,res)=>{
     }
 })
 
-app.get("/getqb", authMiddleware, async (req, res)=>{
+app.get("/getqb", async (req, res)=>{
     let data = await Question.find({})
     res.status(200).json({data})
 })
