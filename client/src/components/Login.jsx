@@ -4,12 +4,16 @@ import axios from 'axios';
 
 function Login() {
   const handleLoginSuccess = (response) => {
-    console.log('Login Success:', response.credential);
     axios.post("https://apti-server.tejascodes.com/verifyUser",{
       token: response.credential
     })
     .then((res)=>{
-      console.log(res);
+      localStorage.setItem("rememberMe", true)
+      localStorage.setItem("token", res.data.token) 
+      localStorage.setItem("email", res.data.email)
+      localStorage.setItem("name", res.data.name)
+      localStorage.setItem("isAdmin", res.data.isAdmin)
+      navigate("/home")
     })
     .catch((e)=>{alert(e.response.data.msg)})
   };

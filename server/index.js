@@ -1,7 +1,7 @@
 const express = require('express');
 const { OAuth2Client, auth } = require('google-auth-library');
 require('dotenv').config();
-const { CLIENT_ID, PASSWORD, SECRET_KEY, ADMIN_ID, ADMIN_PASSWORD } = process.env;
+const { CLIENT_ID, PASSWORD, SECRET_KEY, ADMIN_ID, ADMIN_PASSWORD, DEFAULT_PASS } = process.env;
 const cors = require('cors');
 const nodemailer = require("nodemailer")
 const zod = require("zod")
@@ -16,12 +16,7 @@ const  {authMiddleware}  = require("./authMiddleware")
 app.use(express.json())
 app.use(bodyParser.json())
 
-const corsOptions = {
-    origin: 'https://aptidote.vercel.app/',
-    methods: 'GET,POST,PUT,DELETE',
-    allowedHeaders: 'Content-Type,Authorization',
-  };  
-app.use(cors(corsOptions));
+app.use(cors())
 
 let newUser;
 
@@ -138,36 +133,32 @@ app.post("/signin", async(req,res)=>{
 
 app.post("/verifyUser", async (req,res)=>{
     let token = req.body.token
-    try{
-        jwt.verify(token, SECRET_KEY)
-        let userData = jwt.decode(token)
-        let exist = await User.exists({
-            email: userData.email,
+    let data = jwt.decode(token)
+    let user = new User({
+        firstName: data.given_name,
+        lastName: data.family_name,
+        email: data.email,
+        password:DEFAULT_PASS,
+        age: 0,
+        gender: ""
+    })
+    let exist;
+    if(zod.string().email().safeParse(data.email).success){
+        exist = await User.exists({
+            email: data.email
         })
         if(exist != null){
-            let token = jwt.sign({id: userData.email}, SECRET_KEY)
-            let user = await User.find({email: userData.email})
-            let email = userData.email
-            let name = user[0].firstName
-            res.status(200).json({token: token, email: email, name: name})
+            res.status(200).json({token: token, email: data.email, name: data.given_name, isAdmin: false})
         }
         else{
-            res.status(404).json({
-                msg: "user does not exist"
-            })
-        }
-        let user = {
-            firstName: userData.given_name,
-            lastName: userData.family_name,
-            email: userData.email,
-            password: "",
-            age: 0,
-            gender: "",
+            let data = await user.save()
+            res.status(200).json({token: token, email: data.email, name: data.given_name, isAdmin: false})
         }
     }
-    catch(e){
-        console.log("jwt not provided");
-
+    else{
+        res.status(404).json({
+            msg:"Some Error"
+        })
     }
 })
 
