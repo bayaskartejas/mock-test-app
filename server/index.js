@@ -1,6 +1,5 @@
 const express = require('express');
 const { OAuth2Client, auth } = require('google-auth-library');
-const QB = require("./QB.json")
 require('dotenv').config();
 const { CLIENT_ID, PASSWORD, SECRET_KEY, ADMIN_ID, ADMIN_PASSWORD } = process.env;
 const cors = require('cors');
@@ -15,8 +14,14 @@ const bodyParser = require("body-parser");
 const  {authMiddleware}  = require("./authMiddleware")
 
 app.use(express.json())
-app.use(cors());
 app.use(bodyParser.json())
+
+const corsOptions = {
+    origin: 'https://aptidote.vercel.app/',
+    methods: 'GET,POST,PUT,DELETE',
+    allowedHeaders: 'Content-Type,Authorization',
+  };  
+app.use(cors(corsOptions));
 
 let newUser;
 
