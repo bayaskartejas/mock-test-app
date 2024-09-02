@@ -48,7 +48,7 @@ function App() {
       token = sessionStorage.getItem("token")
     }
     if(token){
-      axios.get("http://apti-server.tejascodes.com/getqb",{
+      axios.get("https://apti-server.tejascodes.com/getqb",{
         headers:{
           "Authorization": token
         }

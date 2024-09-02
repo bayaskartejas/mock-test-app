@@ -18,7 +18,7 @@
       else{
         alert("Select gender properly");
       }
-      axios.post("http://apti-server.tejascodes.com/otp", {
+      axios.post("https://apti-server.tejascodes.com/otp", {
         firstName: firstNameRef.current.value,
         lastName: lastNameRef.current.value,
         email: emailRef.current.value,

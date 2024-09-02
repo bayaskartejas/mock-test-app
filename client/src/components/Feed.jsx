@@ -30,7 +30,7 @@ function Feed({ showLogout, setShowLogout, children }) {
             D : document.getElementById("d").value,
             S : document.getElementById("s").value
         }
-        axios.post("http://13.202.119.242:3000/postQuestion", data,{
+        axios.post("https://apti-server.tejascodes.com/postQuestion", data,{
             headers: {
                 "Authorization": localStorage.getItem("token")
             }
