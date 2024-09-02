@@ -1,8 +1,6 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 function Greet() {
-  const navigate = useNavigate()
   let name;
   useEffect(()=>{
   if(localStorage.getItem("rememberMe")=="true"){
@@ -11,7 +9,7 @@ function Greet() {
       else{
       name = sessionStorage.getItem("name")
       }
-  },[localStorage.getItem("rememberMe")])
+  },[])
   return (
     <div className='h-max'>
       <div className='w-full flex justify-center text-slate-500 text-2xl sm:text-4xl tracking-wide font-semibold text-center items-center'>Hi {name},</div>
