@@ -48,7 +48,7 @@ function App() {
       token = sessionStorage.getItem("token")
     }
     if(token){
-      axios.get("http://13.202.188.107/getqb",{
+      axios.get("http://13.202.119.242:3000/getqb",{
         headers:{
           "Authorization": token
         }

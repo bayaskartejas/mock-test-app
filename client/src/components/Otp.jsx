@@ -17,7 +17,7 @@ function Otp({setToSignin, setToOtpPage, newOtp}) {
                 if(newOtp == otpRef.current.value){
                     setToSignin(true)
                     setToOtpPage(false)
-                    axios.post("http://13.202.188.107/newuser",{
+                    axios.post("http://13.202.119.242:3000/newuser",{
                         id: "",
                         password: "",
                     })
