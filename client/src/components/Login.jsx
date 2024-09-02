@@ -5,7 +5,7 @@ import axios from 'axios';
 function Login() {
   const handleLoginSuccess = (response) => {
     console.log('Login Success:', response.credential);
-    axios.post("http://13.202.119.242:3000/verifyUser",{
+    axios.post("http://apti-server.tejascodes.com/verifyUser",{
       token: response.credential
     })
     .then((res)=>{
