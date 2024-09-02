@@ -58,7 +58,7 @@ function Mock({qbanks, qbId, showLogout, setShowLogout, setQbanks, infinity, chi
     }
   },[localStorage.getItem("rememberMe")])
   useEffect(() => {
-    if (qbanks && qbId) {
+    if (qbanks.length > 0 && qbId) {
       const shuffleArray = (array, limit) => {
         let shuffledArray = array.slice();
         for (let i = limit - 1; i > 0; i--) {
