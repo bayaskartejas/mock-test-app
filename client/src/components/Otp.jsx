@@ -30,7 +30,6 @@ function Otp({setToSignin, setToOtpPage, newOtp}) {
                 }
                 else{
                     alert("Wrong OTP!")
-                    console.log(newOtp);
                 }
             }} className='flex text-white text-lg bg-green-201 w-full py-1 rounded-md hover:bg-green-101 transition delay-100 hover:shadow-md justify-center mt-5'>Submit</button>
         </div>

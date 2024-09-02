@@ -37,10 +37,9 @@ function Feed({ showLogout, setShowLogout, children }) {
         })
         .then((res)=>{
             alert("question posted")
-            console.log(res);
         })
         .catch((e)=>{
-            console.log(e);
+            alert(e);
         })
     }
     return (

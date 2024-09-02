@@ -21,7 +21,6 @@ function Login() {
   };
 
   const handleLoginError = (error) => {
-    console.error('Login Error:', error);
     alert(`Login failed: ${error.error}`);
   };
 

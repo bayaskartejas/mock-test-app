@@ -16,11 +16,9 @@ function Landing() {
   useEffect(()=>{
     if(localStorage.getItem("rememberMe") == "true"){
      token = localStorage.getItem("token")
-     console.log("reached1");
     }
     else{
      token = sessionStorage.getItem("token")
-     console.log(typeof(localStorage.getItem("rememberMe")));
     }
     if(!token){
       navigate("/")

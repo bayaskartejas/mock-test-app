@@ -13,7 +13,6 @@
     function handleSubmit(e){
       e.preventDefault();
       if( genderRef.current.value == "Male" || genderRef.current.value == "Female" ){
-        console.log(genderRef.current.value);
       }
       else{
         alert("Select gender properly");
@@ -28,7 +27,6 @@
     })
     .then((res)=>{
         setNewOtp(res.data.otp)
-        console.log(newOtp);
         setToOtpPage(true)    
         setToSignup(false)        
     })
